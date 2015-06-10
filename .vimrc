@@ -1,19 +1,52 @@
+" Vundle requirements
+set nocompatible              " be iMproved, required
+filetype off                  " required
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/vundle'
+" Git integration
+Plugin 'tpope/vim-fugitive'
+" Auto completion
+" Plugin 'Shougo/neocomplete'
+" ctrlp
+Plugin 'kien/ctrlp.vim'
+" NERD Tree
+Plugin 'scrooloose/nerdtree'
+" vim-arline
+Plugin 'bling/vim-airline'
+" Bufexplorer
+Plugin 'jlanzarotta/bufexplorer'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 set title
 set tabstop=4
 set shiftwidth=4
 set expandtab
 set tw=79
 set autoindent
-" set showmatch
+set wrap
+set number
+set laststatus=2
 
-ab epdbi import epdb; epdb.st()
-ab rpdbi import rpdb2; rpdb2.start_embedded_debugger('foo', True, True)
+" The leader key
+let mapleader = ';'
+
+" Folding
+set foldmethod=indent
+set foldlevel=100
+
+" Highlight trailing whitespace
+match ErrorMsg '\s\+$'
 
 autocmd FileType make setlocal noexpandtab
 autocmd FileType csv setlocal tw=1000
 autocmd FileType csv setlocal paste
 autocmd FileType spec setlocal noexpandtab tabstop=8
-" autocmd FileType python source /home/jslagle/.vim/ftplugin/python_editing.vim
 
 " Case insensitive searches...
 set ignorecase
@@ -23,48 +56,57 @@ set smartcase
 " show the `best match so far' as search strings are typed:
 set incsearch
 
-" ctags
-set tags=~/rpath-hg/ctags/tags.tags
-" set tags=~/rpath-hg/ctags/conary-ovf-support.tags
-" set tags=~/rpath-hg/ctags/mint.tags
-" set tags=~/rpath-hg/ctags/rbuilder.tags
-" set tags=~/tags,~/tags-python2.4
-" set tags=~/tags-raa-cherrypy3
-" set tags=~/tags-raa-2.1
-" set tags=~/tags-raa
-
-" highlight WhiteSpaceEOL ctermbg=darkgreen guibg=lightgreen
-" match WhiteSpaceEOL /^\s*\ \s*\|\s\+$/
-" autocmd WinEnter * match WhiteSpaceEOL /^\s*\ \s*\|\s\+$/
-" au BufWinEnter * let w:m3=matchadd('ErrorMsg', '\s\+$', -1)
-" au BufWinEnter * let w:m4=matchadd('ErrorMsg', '^ \+\t\+\|^\t\+ \+', -1)
-
-" Folding
-" set fdm=indent
-autocmd bufwinenter * normal zi
-
 :filetype plugin on
 
-map <F10> :TlistToggle<CR>
 set pastetoggle=<F9>
-map <F7> :set mouse=<CR>
-map <F8> :set mouse=a<CR>
-map <A-v> :vsplit<CR><C-w>l
-map <F6> :TlistSync<CR>
-
-
-let Tlist_Sort_Type="name"
-let Tlist_Auto_Highlight_Tag=0
-let Tlist_Exit_OnlyWindow=1
-let Tlist_Show_One_File=1
-" let Tlist_Enable_Fold_Column=0
-
-" Set up puppet manifest and spec options
-au BufRead,BufNewFile *.pp
-  \ set filetype=puppet
-au BufRead,BufNewFile *_spec.rb
-  \ nmap <F8> :!rspec --color %<CR>
-
 colorscheme koehler
 
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+" aliases
+ab epdbi import epdb; epdb.st()
+ab rpdbi import rpdb2; rpdb2.start_embedded_debugger('foo', True, True)
+
+" spellcheck
+" don't highlight mispellings
+hi clear SpellBad
+" don't highlight non-capitalizations
+hi clear SpellCap
+
+" newcomplete
+" disable autocomplete until TAB is pressed
+let g:neocomplete#disable_auto_complete = 1
+inoremap <expr><S-Tab> pumvisible() ? "\<C-n>" : neocomplete#start_manual_complete('buffer')
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" ctrlp
+let g:ctrlp_tabpage_position = 'a'
+
+" vim-airline
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+"
+" " Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" GUI
+set guifont=Fixed\ 13
+colors koehler
+set guioptions-=T
+set guioptions+=l
+set stal=2
+
+" CursorLine
+set cursorline
+highlight clear CursorLine
+highlight CursorLine term=underline ctermbg=8 guibg=#555555
+
+" Buffers
+nnoremap <leader>m :bnext!<CR>
+nnoremap <leader>n :bprev!<CR>
