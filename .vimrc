@@ -43,10 +43,15 @@ set foldlevel=100
 " Highlight trailing whitespace
 match ErrorMsg '\s\+$'
 
+filetype plugin on
+filetype plugin indent on
+
 autocmd FileType make setlocal noexpandtab
 autocmd FileType csv setlocal tw=1000
 autocmd FileType csv setlocal paste
 autocmd FileType spec setlocal noexpandtab tabstop=8
+autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
+autocmd FileType rst setlocal shiftwidth=2 tabstop=2
 
 " Case insensitive searches...
 set ignorecase
@@ -56,7 +61,6 @@ set smartcase
 " show the `best match so far' as search strings are typed:
 set incsearch
 
-:filetype plugin on
 
 set pastetoggle=<F9>
 colorscheme koehler
@@ -96,7 +100,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 " GUI
-set guifont=Fixed\ 13
+set guifont=Fixed\ 10
 colors koehler
 set guioptions-=T
 set guioptions+=l
